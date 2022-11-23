@@ -8,7 +8,7 @@
     
     <th:block layout:fragment="content">
     	<div class="page_tits">
-    		<h3>게시판 관리</h3>
+    		<h3>게시판관리</h3>
     		<p class="path"><strong>현재위치:</strong><span>게시판관리</span><span>리스트형</span><span>글작성</span></p>
     	</div>
     	
@@ -27,7 +27,7 @@
     					<tbody>
     						<tr>
     							<th scope="row">공지글</th>
-    							<td><span class="chkbox"><input type="checkbox" id=isNotice" class="chk" /><i></i><label for=isNotice">설정</label></span></td>
+    							<td><span class="chkbox"><input type="checkbox" name="isNotice" id=isNotice" class="chk" /><i></i><label for=isNotice">설정</label></span></td>
     							<th scope="row">등록일</th>
     							<td colspan="3"><input type="text" id="createDate" name="createdDate" readonly /></td>
     						</tr>
@@ -41,7 +41,7 @@
     						</tr>
     						<tr>
     							<th>내용<span class="es">필수입력</span></th>    							
-    							<td colspan="3"><textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해 주세요." /></td>
+    							<td colspan="3"><textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
     						</tr>    							
     					</tbody>
     				</table>
@@ -57,7 +57,7 @@
     	<script th:inline="javascript">
     	/*<![CDATA[*/
     		window.onload = () => {
-    			initCreatedDate();
+    			renderPostInfo();
     		}
     		
     		function initCreatedDate() {
@@ -66,18 +66,41 @@
     		
     		function savePost() {
     			const form = document.getElementById('saveForm');
-    			const field = [form.title, form.writer, form.content];
-    			const fieldNames = ['제목', '이름', '내용'];
+    			const fields = [form.title, form.writer, form.content];
+    			const fieldNames = ['제목', '이름', '내용'];    		
     			
     			for(let i=0, len=fields.length; i<len; i++) {
-    				isValid(fields[i], fieldName[i]);
+    				isValid(fields[i], fieldNames[i]);
     			}
     			
     			document.getElementById('saveBtn').disabled = true;
     			form.noticeYn.value = form.isNotice.checked;
-    			form.action = [[ ${post == null } ]] ? '/post/save.do' : '/post/update.do';
+    			form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do';
     			
     			form.submit();
+    		}
+    		
+    		function renderPostInfo() {
+    			const post = [[ ${post} ]];
+    			
+    			//console.log('post=>' + JSON.stringify(post, null, "\t")); */
+    			console.log('post=>' + JSON.stringify(post, null, 4));
+    			//console.dir(post);
+    			
+    			if(!post) {
+    				initCreatedDate();
+    				return false;
+    			}
+    			
+    			const form = document.getElementById('saveForm');
+    			const fields = ['id', 'title', 'content', 'writer', 'noticeYn'];
+    			
+    			form.isNotice.checked = post.noticeYn;
+    			form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');
+    			
+    			fields.forEach(field => {
+    				form[field].value = post[field];
+    			});
     		}
     	/*]]*/	
     	</script>
