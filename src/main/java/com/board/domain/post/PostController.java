@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.board.common.dto.MessageDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,9 +43,11 @@ public class PostController {
 	}
 
 	@PostMapping("/post/save.do")
-	public String savePost(final PostRequest params) {
+	public String savePost(final PostRequest params, Model model) {
 		postService.savePost(params);
-		return "redirect:/post/list.do";
+//		return "redirect:/post/list.do";
+		MessageDto message = new MessageDto("게시글 생성이 완료되었습니다.", "/post/list.do", RequestMethod.GET, null);
+		return showMessageAndRedirect(message, model);
 	}
 
 	@GetMapping("/post/list.do")
@@ -57,6 +62,11 @@ public class PostController {
 		PostResponse post = postService.findPostById(id);
 		model.addAttribute("post", post);
 		return "post/view";
+	}
+
+	private String showMessageAndRedirect(final MessageDto params, Model model) {
+		model.addAttribute("params", params);
+		return "common/messageRedirect";
 	}
 
 }
