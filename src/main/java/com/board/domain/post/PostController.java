@@ -31,23 +31,31 @@ public class PostController {
 	}
 
 	@PostMapping("/post/update.do")
-	public String updatePost(final PostRequest params) {
+	public String updatePost(final PostRequest params, Model model) {
 		postService.updatePost(params);
-		return "redirect:/post/list.do";
+		MessageDto message = new MessageDto("게시글 수정이 완료되었습니다", "/post/list.do", RequestMethod.GET, null);
+		//return "redirect:/post/list.do";
+		return showMessageAndRedirect(message, model);
 	}
 
 	@PostMapping("/post/delete.do")
-	public String deletePost(@RequestParam final Long id) {
+	public String deletePost(@RequestParam final Long id, Model model) {
 		postService.deletePost(id);
-		return "redirect:/post/list.do";
+		MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다", "/post/list.do", RequestMethod.GET, null);
+		//return "redirect:/post/list.do";
+		return showMessageAndRedirect(message, model);
 	}
 
 	@PostMapping("/post/save.do")
 	public String savePost(final PostRequest params, Model model) {
+		//System.out.println(params);
 		postService.savePost(params);
 //		return "redirect:/post/list.do";
 		MessageDto message = new MessageDto("게시글 생성이 완료되었습니다.", "/post/list.do", RequestMethod.GET, null);
+		//String temp = showMessageAndRedirect(message, model);
+		//System.out.println(temp);		
 		return showMessageAndRedirect(message, model);
+		//return temp;
 	}
 
 	@GetMapping("/post/list.do")
@@ -65,6 +73,7 @@ public class PostController {
 	}
 
 	private String showMessageAndRedirect(final MessageDto params, Model model) {
+	    //System.out.println(params);
 		model.addAttribute("params", params);
 		return "common/messageRedirect";
 	}

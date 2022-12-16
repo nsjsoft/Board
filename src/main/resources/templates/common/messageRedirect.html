@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
-<head th:replace="fragments/header :: main-head"></head></head>
+<head th:replace="fragments/header :: main-head"></head>
 <body>
-	<form th:if="${not #maps.isEmpty(params.data)}" id="redirctForm" th:action="${params.redirectUri}" th:method="${params.method}" style="display:none;">
+	<!-- <form th:if="${not #maps.isEmpty(params.data)}" id="redirctForm" th:action="${params.redirectUri}" th:method="${params.method}" style="display:none;"> -->
+	
+	<form th:if="${not #maps.isEmpty(params.data)}" id="redirctForm" th:action="${params.redirectUri}" th:method="${params.method}">
 		<input th:each="key, status : ${params.data.keySet()}" type="hidden" th:name="${key}" th:value="${params.data.get(key)}" />
-		<th:block layout:fragment="script">
-			<script th:inline="javascript">
-			/*<![CDATA[*/
-				window.onload = () => {
-					const message = [[ ${params.message }]];
-					
-					if(message) {
-						alert(message);
-					}
-					
-					const form = document.getElementById('redirectForm');
-					if(form) {
-						form.submit();
-						return false;
-					}
-					
-					const redirectUri = [[ ${params.redirectUri} ]];
-					location.href = redirectUri;
+	</form>
+				
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+			
+			window.onload = () => {
+				/*  alert('ㅎㅎㅎ'); */	
+				const message = [[ ${params.message} ]];
+				
+				if(message) {
+					alert(message);
 				}
-			/*]]*/	
-			</script>
-		</th:block>			
-	</form>	
+				
+				const form = document.getElementById('redirectForm');
+				if(form) {
+					form.submit();
+					return false;
+				}
+				
+				const redirectUri = [[ ${params.redirectUri} ]];
+				location.href = redirectUri;
+			}
+		/*]]*/	
+		</script>
+	</th:block>		
 </body>
+</html>
