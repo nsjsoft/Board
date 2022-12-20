@@ -36,3 +36,16 @@ CREATE TABLE `tb_post` (
     `modified_date` datetime               DEFAULT NULL COMMENT '최종 수정일시',
     PRIMARY KEY (`id`)
 ) COMMENT '게시글';
+
+select * from tb_post
+;
+
+update tb_post
+set delete_yn = 0
+;
+
+desc tb_post;
+
+INSERT INTO tb_post (title, content, writer, view_cnt, notice_yn, delete_yn)
+(SELECT title, content, writer, view_cnt, notice_yn, delete_yn FROM tb_post WHERE delete_yn = 0);
+

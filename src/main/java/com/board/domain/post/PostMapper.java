@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.board.common.dto.SearchDto;
+
 @Mapper
 public interface PostMapper {
 	
@@ -15,8 +17,8 @@ public interface PostMapper {
 	
 	void deleteById(Long id);
 	
-	List<PostResponse> findAll();
+	List<PostResponse> findAll(SearchDto params);
 	
-	int Count();
+	int count(SearchDto params);
 	
 }

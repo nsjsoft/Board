@@ -29,8 +29,8 @@ public class PostMapperTest {
 		
 		postMapper.save(params);
 		
-		List<PostResponse> posts = postMapper.findAll();
-		System.out.println("전체 게시글 개수는 : " + posts.size() + "개입니다.");
+		//List<PostResponse> posts = postMapper.findAll();
+		//System.out.println("전체 게시글 개수는 : " + posts.size() + "개입니다.");
 	}
 	
 	@Test
@@ -69,8 +69,8 @@ public class PostMapperTest {
 	
 	@Test
 	void delete() {
-		System.out.println(postMapper.findAll().size());
+		//System.out.println(postMapper.findAll().size());
 		postMapper.deleteById(1L);
-		System.out.println(postMapper.findAll().size());
+		//System.out.println(postMapper.findAll().size());
 	}
 }
