@@ -10,6 +10,6 @@ public class PostRequest {
 	private Long id;
 	private String title;
 	private String content;
-	private String er;
+	private String writer;
 	private Boolean noticeYn;
 }
