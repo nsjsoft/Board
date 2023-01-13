@@ -75,13 +75,13 @@
     			
     			document.getElementById('saveBtn').disabled = true;
     			form.noticeYn.value = form.isNotice.checked;
-    			form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do';
+    			form.action = /*[[ ${post == null} ]]*/ null ? '/post/save.do' : '/post/update.do';
     			
     			form.submit();
     		}
     		
     		function renderPostInfo() {
-    			const post = [[ ${post} ]];
+    			const post = /*[[${post}]]*/ null;
     			
     			//console.log('post=>' + JSON.stringify(post, null, "\t")); */
     			console.log('post=>' + JSON.stringify(post, null, 4));

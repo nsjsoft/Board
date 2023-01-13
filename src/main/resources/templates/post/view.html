@@ -59,7 +59,7 @@
 	/*<![CDATA[*/
 		
 		function deletePost() {
-			const id = [[ ${post.id} ]];
+			const id = /*[[ ${post.id} ]]*/ null;
 			
 			if(!confirm(id + '번 게시글을 삭제할까요?')) {
 				return false;
